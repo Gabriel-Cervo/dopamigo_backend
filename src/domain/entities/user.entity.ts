@@ -5,8 +5,8 @@ import {
   Index,
   CreateDateColumn,
 } from 'typeorm';
-import crypto from 'crypto';
 import { Exclude } from 'class-transformer';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class User {
@@ -48,6 +48,6 @@ export class User {
     id?: string,
   ) {
     Object.assign(this, props);
-    this.id = id ?? crypto.randomUUID();
+    this.id = id ?? uuidv4();
   }
 }
