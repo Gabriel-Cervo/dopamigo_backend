@@ -8,7 +8,6 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import crypto from 'crypto';
 import { Exclude } from 'class-transformer';
 import { UserTask } from './userTask.entity';
 import { Score } from './score.entity';
