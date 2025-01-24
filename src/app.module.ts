@@ -6,6 +6,14 @@ import { LoggerModule } from './infra/logger/logger.module';
 import { ExceptionsModule } from './infra/exceptions/exceptions.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { Achievements } from './domain/entities/achievements.entity';
+import { Notifications } from './domain/entities/notifications.entity';
+import { Reports } from './domain/entities/reports.entity';
+import { Score } from './domain/entities/score.entity';
+import { User } from './domain/entities/user.entity';
+import { UserAchievements } from './domain/entities/userAchievements.entity';
+import { UserTask } from './domain/entities/userTask.entity';
+import { VirtualPet } from './domain/entities/virtualPet.entity';
 
 @Module({
   imports: [
@@ -17,7 +25,16 @@ import { UsersModule } from './users/users.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [],
+      entities: [
+        Achievements,
+        Notifications,
+        Reports,
+        Score,
+        User,
+        UserAchievements,
+        UserTask,
+        VirtualPet,
+      ],
       synchronize: true, // DONT USE THIS TRUE IN PROD
     }),
 

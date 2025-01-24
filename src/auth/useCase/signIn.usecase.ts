@@ -3,7 +3,7 @@ import { User } from 'src/domain/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Inject, Injectable } from '@nestjs/common';
 import { SignInDto } from '../dto/signIn.dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { IException } from 'src/infra/exceptions/exceptions.interface';
