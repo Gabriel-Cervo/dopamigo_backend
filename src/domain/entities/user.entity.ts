@@ -43,24 +43,24 @@ export class User {
   @Column({ nullable: true, type: 'timestamp' })
   deletedAt?: Date | null;
 
-  @OneToMany(() => UserTask, (userTask) => userTask.userId)
+  @OneToMany(() => UserTask, (userTask) => userTask.user)
   tasks: UserTask[];
 
-  @OneToMany(() => Score, (score) => score.userId)
+  @OneToMany(() => Score, (score) => score.user)
   scoreHistory: Score[];
 
-  @OneToMany(() => UserAchievements, (achievement) => achievement.userId)
+  @OneToMany(() => UserAchievements, (achievement) => achievement.user)
   achievements: UserAchievements[];
 
-  @OneToMany(() => Reports, (report) => report.userId)
+  @OneToMany(() => Reports, (report) => report.user)
   reports: Reports[];
 
-  @OneToMany(() => Notifications, (notification) => notification.userId)
+  @OneToMany(() => Notifications, (notification) => notification.user)
   notifications: Notifications[];
 
-  @OneToOne(() => VirtualPet, (pet) => pet.userId, { nullable: true })
+  @OneToOne(() => VirtualPet, (pet) => pet.user, { nullable: true })
   @JoinColumn()
-  petId?: string | null;
+  pet: VirtualPet | null;
 
   constructor(props: {
     name: string;

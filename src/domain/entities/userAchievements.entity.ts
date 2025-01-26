@@ -16,11 +16,11 @@ export class UserAchievements {
 
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn()
-  userId: string;
+  user: User;
 
   @ManyToOne(() => Achievements, (achievement) => achievement.userAchievements)
   @JoinColumn()
-  achievementId: string;
+  achievement: Achievements;
 
   @CreateDateColumn()
   unlockedAt: Date;

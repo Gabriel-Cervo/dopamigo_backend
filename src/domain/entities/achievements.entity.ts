@@ -23,7 +23,7 @@ export class Achievements {
   @Column()
   criteria: string;
 
-  @OneToMany(() => UserAchievements, (achievement) => achievement.achievementId)
+  @OneToMany(() => UserAchievements, (achievement) => achievement.achievement)
   userAchievements: UserAchievements[];
 
   @CreateDateColumn()

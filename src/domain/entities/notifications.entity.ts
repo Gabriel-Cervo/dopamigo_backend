@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { UserTask } from './userTask.entity';
 
 export enum NotificationStatus {
   sent,
@@ -20,11 +21,11 @@ export class Notifications {
 
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn()
-  userId: string;
+  user: User;
 
   @ManyToOne(() => User, (user) => user.tasks, { nullable: true })
   @JoinColumn()
-  taskId?: string | null;
+  task?: UserTask | null;
 
   @Column({
     type: 'enum',

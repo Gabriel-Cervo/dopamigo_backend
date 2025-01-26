@@ -15,7 +15,7 @@ export class Score {
 
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn()
-  userId: string;
+  user: User;
 
   @Column()
   points: number;

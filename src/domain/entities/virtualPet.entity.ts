@@ -13,7 +13,7 @@ export class VirtualPet {
   id: string;
 
   @OneToOne(() => User, (user) => user.tasks)
-  userId: string;
+  user: User;
 
   @Column()
   name: string;

@@ -21,7 +21,7 @@ export class Reports {
 
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn()
-  userId: string;
+  user: User;
 
   @Column({
     type: 'enum',

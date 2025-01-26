@@ -17,9 +17,9 @@ export class UserTask {
 
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn()
-  userId: string;
+  user: User;
 
-  @ManyToOne(() => Notifications, (notification) => notification.taskId)
+  @ManyToOne(() => Notifications, (notification) => notification.task)
   @JoinColumn()
   notifications?: Notifications[];
 
@@ -36,12 +36,25 @@ export class UserTask {
   @Column()
   isCompleted: boolean;
 
+  @Column({ nullable: true })
+  notificationTime?: number | null;
+
   @Column()
-  notificationTime: number;
+  difficultLevel: number;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
   deletedAt?: Date | null;
+
+  constructor(props: {
+    title: string;
+    description: string;
+    time: Date;
+    isCompleted: boolean;
+    difficultLevel: number;
+  }) {
+    Object.assign(this, props);
+  }
 }
