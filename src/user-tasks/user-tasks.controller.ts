@@ -11,6 +11,8 @@ import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';
 import { CreateUserTaskDto } from './dto/create-userTask.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { FetchUserTasksForUserUseCase } from './useCase/fetch-userTasks-for-user.usecase';
+import { UserTaskByWeekDto } from './dto/userTask-by-week.dto';
+import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
 
 @Controller('userTasks')
 export class UserTasksController {
@@ -20,6 +22,9 @@ export class UserTasksController {
 
     @Inject(FetchUserTasksForUserUseCase)
     private readonly fetchUserTasksUseCase: FetchUserTasksForUserUseCase,
+
+    @Inject(FetchUserTasksByWeekUseCase)
+    private readonly fetchUserTasksByWeekUseCase: FetchUserTasksByWeekUseCase,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -29,11 +34,18 @@ export class UserTasksController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(':id/:page')
+  @Get('all/:id/:page')
   get(@Param('id') id: string, @Param('page') page: string) {
     return this.fetchUserTasksUseCase.execute(
       id,
       page == null ? null : parseInt(page),
     );
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('byWeek/:id')
+  getByWeek(@Param('id') id: string, @Body() body: UserTaskByWeekDto) {
+    const date = new Date(body.date);
+    return this.fetchUserTasksByWeekUseCase.execute(id, date);
   }
 }
