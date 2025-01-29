@@ -1,5 +1,3 @@
-import { UserFetchResponseDTO } from 'src/users/dto/user-fetch-response.dto';
-
 export class UserTaskFetchResponseDto {
   title: string;
   description: string;

@@ -7,6 +7,7 @@ import { User } from 'src/domain/entities/user.entity';
 import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { FetchUserTasksForUserUseCase } from './useCase/fetch-userTasks-for-user.usecase';
 import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
+import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserTask, User])],
@@ -15,6 +16,7 @@ import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.u
     CreateUserTaskUseCase,
     FetchUserTasksForUserUseCase,
     FetchUserTasksByWeekUseCase,
+    EditUserTaskUseCase,
     ExceptionsService,
   ],
 })

@@ -30,10 +30,6 @@ export class FetchUserTasksByWeekUseCase {
       .andWhere("userTask.time < (:startDate + interval '7 days')", {
         startDate: date,
       })
-      .groupBy('userTask.id')
-      .addGroupBy('week, year')
-      .orderBy('year', 'ASC')
-      .addOrderBy('week', 'ASC')
       .getMany();
 
     const response: UserTaskFetchResponseDto[] | null = queryResult.map(

@@ -5,7 +5,9 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';
 import { CreateUserTaskDto } from './dto/create-userTask.dto';
@@ -13,6 +15,8 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { FetchUserTasksForUserUseCase } from './useCase/fetch-userTasks-for-user.usecase';
 import { UserTaskByWeekDto } from './dto/userTask-by-week.dto';
 import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
+import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
+import { UpdateUserTaskDto } from './dto/update-userTask.dto';
 
 @Controller('userTasks')
 export class UserTasksController {
@@ -25,6 +29,9 @@ export class UserTasksController {
 
     @Inject(FetchUserTasksByWeekUseCase)
     private readonly fetchUserTasksByWeekUseCase: FetchUserTasksByWeekUseCase,
+
+    @Inject(EditUserTaskUseCase)
+    private readonly editUserTaskUseCase: EditUserTaskUseCase,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -47,5 +54,11 @@ export class UserTasksController {
   getByWeek(@Param('id') id: string, @Body() body: UserTaskByWeekDto) {
     const date = new Date(body.date);
     return this.fetchUserTasksByWeekUseCase.execute(id, date);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('update/:id')
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateUserTaskDto) {
+    return this.editUserTaskUseCase.execute(id, updateTaskDto);
   }
 }
