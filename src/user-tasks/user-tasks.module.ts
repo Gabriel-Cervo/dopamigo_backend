@@ -8,6 +8,7 @@ import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { FetchUserTasksForUserUseCase } from './useCase/fetch-userTasks-for-user.usecase';
 import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
 import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
+import { DeleteUserTaskUseCase } from './useCase/delete-userTask.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserTask, User])],
@@ -17,6 +18,7 @@ import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
     FetchUserTasksForUserUseCase,
     FetchUserTasksByWeekUseCase,
     EditUserTaskUseCase,
+    DeleteUserTaskUseCase,
     ExceptionsService,
   ],
 })

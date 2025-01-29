@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserTask } from 'src/domain/entities/userTask.entity';
@@ -33,6 +33,7 @@ export class FetchUserTasksForUserUseCase {
         user: true,
       },
       where: {
+        deletedAt: IsNull(),
         user: {
           id: id,
         },

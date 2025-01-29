@@ -8,6 +8,7 @@ import {
   Put,
   UseGuards,
   Request,
+  Delete,
 } from '@nestjs/common';
 import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';
 import { CreateUserTaskDto } from './dto/create-userTask.dto';
@@ -17,6 +18,7 @@ import { UserTaskByWeekDto } from './dto/userTask-by-week.dto';
 import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
 import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
 import { UpdateUserTaskDto } from './dto/update-userTask.dto';
+import { DeleteUserTaskUseCase } from './useCase/delete-userTask.usecase';
 
 @Controller('userTasks')
 export class UserTasksController {
@@ -32,6 +34,9 @@ export class UserTasksController {
 
     @Inject(EditUserTaskUseCase)
     private readonly editUserTaskUseCase: EditUserTaskUseCase,
+
+    @Inject(DeleteUserTaskUseCase)
+    private readonly deleteUserTaskUseCase: DeleteUserTaskUseCase,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -60,5 +65,11 @@ export class UserTasksController {
   @Put('update/:id')
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateUserTaskDto) {
     return this.editUserTaskUseCase.execute(id, updateTaskDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('update/:id')
+  delete(@Param('id') id: string) {
+    return this.deleteUserTaskUseCase.execute(id);
   }
 }

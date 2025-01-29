@@ -26,6 +26,7 @@ export class FetchUserTasksByWeekUseCase {
       ])
       .leftJoin('userTask.user', 'user')
       .where('user.id = :id', { id })
+      .andWhere('userTask.deletedAt IS NULL')
       .andWhere('userTask.time >= :startDate', { startDate: date })
       .andWhere("userTask.time < (:startDate + interval '7 days')", {
         startDate: date,
