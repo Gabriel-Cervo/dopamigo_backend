@@ -7,7 +7,6 @@ import {
   Post,
   Put,
   UseGuards,
-  Request,
   Delete,
 } from '@nestjs/common';
 import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';

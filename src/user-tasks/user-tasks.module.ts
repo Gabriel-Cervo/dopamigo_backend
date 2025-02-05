@@ -9,9 +9,10 @@ import { FetchUserTasksForUserUseCase } from './useCase/fetch-userTasks-for-user
 import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
 import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
 import { DeleteUserTaskUseCase } from './useCase/delete-userTask.usecase';
+import { Score } from 'src/domain/entities/score.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserTask, User])],
+  imports: [TypeOrmModule.forFeature([UserTask, User, Score])],
   controllers: [UserTasksController],
   providers: [
     CreateUserTaskUseCase,

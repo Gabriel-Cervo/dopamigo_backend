@@ -20,12 +20,13 @@ export class Score {
   @Column()
   points: number;
 
-  @Column()
-  level: number;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
   deletedAt?: Date | null;
+
+  constructor(props: { points: number; deletedAt?: Date | null }) {
+    Object.assign(this, props);
+  }
 }

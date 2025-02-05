@@ -20,7 +20,7 @@ export class CreateUserTaskUseCase {
       title: input.title,
       description: input.description,
       time: new Date(input.date),
-      isCompleted: false,
+      isCompleted: input.isCompleted ?? false,
       difficultLevel: input.difficultLevel,
     });
 
