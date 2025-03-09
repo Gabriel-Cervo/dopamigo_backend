@@ -12,14 +12,14 @@ export class VirtualPet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User, (user) => user.tasks)
+  @OneToOne(() => User, (user) => user.pet)
   user: User;
 
   @Column()
   name: string;
 
-  @Column({ type: 'json' })
-  appearance: string;
+  @Column()
+  level: number;
 
   @Column()
   hapinessLevel: number;
@@ -32,4 +32,11 @@ export class VirtualPet {
 
   @Column({ nullable: true, type: 'timestamp' })
   deletedAt?: Date | null;
+
+  constructor(name: string) {
+    this.name = name;
+    this.level = 0;
+    this.hapinessLevel = 100;
+    this.lastInteraction = new Date();
+  }
 }

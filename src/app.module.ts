@@ -15,6 +15,7 @@ import { UserAchievements } from './domain/entities/userAchievements.entity';
 import { UserTask } from './domain/entities/userTask.entity';
 import { VirtualPet } from './domain/entities/virtualPet.entity';
 import { UserTasksModule } from './user-tasks/user-tasks.module';
+import { VirtualPetModule } from './virtual-pet/virtual-pet.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { UserTasksModule } from './user-tasks/user-tasks.module';
     AuthModule,
     UsersModule,
     UserTasksModule,
+    VirtualPetModule,
   ],
   controllers: [AppController],
 })

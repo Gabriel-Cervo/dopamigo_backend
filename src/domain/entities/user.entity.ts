@@ -15,6 +15,7 @@ import { UserAchievements } from './userAchievements.entity';
 import { Reports } from './reports.entity';
 import { Notifications } from './notifications.entity';
 import { VirtualPet } from './virtualPet.entity';
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
