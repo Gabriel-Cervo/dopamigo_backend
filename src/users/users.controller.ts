@@ -18,6 +18,8 @@ import { FetchAllUsersUseCase } from './useCase/fetch-all-users.usecase';
 import { FetchUserByIdUseCase } from './useCase/fetch-user-by-id.usecase';
 import { EditUserUseCase } from './useCase/edit-user.usecase';
 import { DeleteUserUseCase } from './useCase/delete-user.usecase';
+import { FetchUserScoreUseCase } from './useCase/fetch-user-score.usecase';
+import { FetchUserTotalScoreUseCase } from './useCase/fetch-user-total-score.usecase';
 
 @Controller('users')
 export class UsersController {
@@ -36,6 +38,12 @@ export class UsersController {
 
     @Inject(DeleteUserUseCase)
     private readonly deleteUserUseCase: DeleteUserUseCase,
+
+    @Inject(FetchUserScoreUseCase)
+    private readonly fetchUserScoreUseCase: FetchUserScoreUseCase,
+
+    @Inject(FetchUserTotalScoreUseCase)
+    private readonly fetchTotalUserScoreUseCase: FetchUserTotalScoreUseCase,
   ) {}
 
   @Post()
@@ -63,5 +71,17 @@ export class UsersController {
   @Delete('me')
   remove(@Request() req: any) {
     return this.deleteUserUseCase.execute(req.user.sub);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me/scores/history')
+  getScore(@Request() req: any) {
+    return this.fetchUserScoreUseCase.execute(req.user.sub);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me/scores/total')
+  getTotalScore(@Request() req: any) {
+    return this.fetchTotalUserScoreUseCase.execute(req.user.sub);
   }
 }
