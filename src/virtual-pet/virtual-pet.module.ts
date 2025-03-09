@@ -5,10 +5,17 @@ import { VirtualPet } from 'src/domain/entities/virtualPet.entity';
 import { VirtualPetController } from './virtual-pet.controller';
 import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { CreatePetUseCase } from './useCase/createPet.usecase';
+import { FetchPetUseCase } from './useCase/fetchPet.usecase';
+import { DeletePetUseCase } from './useCase/deletePet.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, VirtualPet])],
   controllers: [VirtualPetController],
-  providers: [ExceptionsService, CreatePetUseCase],
+  providers: [
+    ExceptionsService,
+    CreatePetUseCase,
+    FetchPetUseCase,
+    DeletePetUseCase,
+  ],
 })
 export class VirtualPetModule {}

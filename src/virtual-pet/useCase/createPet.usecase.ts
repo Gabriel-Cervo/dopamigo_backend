@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VirtualPet } from 'src/domain/entities/virtualPet.entity';
 import { User } from 'src/domain/entities/user.entity';
 import { CreatePetDto } from '../dto/create-pet.dto';
-import { PetResponseDto } from '../dto/create-pet-response.dto';
+import { PetResponseDto } from '../dto/pet-response.dto';
 
 @Injectable()
 export class CreatePetUseCase {
