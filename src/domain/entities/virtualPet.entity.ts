@@ -15,7 +15,7 @@ export class VirtualPet {
   @OneToOne(() => User, (user) => user.pet)
   user: User;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
   @Column()

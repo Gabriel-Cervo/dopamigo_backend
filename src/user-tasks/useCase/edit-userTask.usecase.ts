@@ -2,7 +2,7 @@
 import { IsNull, Repository } from 'typeorm';
 import { User } from 'src/domain/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UpdateUserTaskDto } from '../dto/update-userTask.dto';
 import { UserTask } from 'src/domain/entities/userTask.entity';
 import { Score } from 'src/domain/entities/score.entity';
@@ -10,6 +10,7 @@ import {
   UpdateUserTaskResponseDto,
   UpdateUserTaskScoreResponseDto,
 } from '../dto/update-userTask-response.dto';
+import { VirtualPetService } from 'src/virtual-pet/virtual-pet.service';
 
 @Injectable()
 export class EditUserTaskUseCase {
@@ -22,6 +23,9 @@ export class EditUserTaskUseCase {
 
     @InjectRepository(User)
     private userRepo: Repository<User>,
+
+    @Inject(VirtualPetService)
+    private readonly virtualPetService: VirtualPetService,
   ) {}
 
   async execute(id: string, input: UpdateUserTaskDto) {
@@ -50,9 +54,15 @@ export class EditUserTaskUseCase {
         score.id,
         score.points,
       );
+
+      this.virtualPetService.didFinishTask(input.userId, input.difficultLevel);
     }
 
     await this.taskRepo.save(task);
+    await this.virtualPetService.levelUpIfNeeded(
+      getUserTotalScore(input.userId),
+      input.userId,
+    );
     return response;
   }
 
@@ -91,5 +101,14 @@ export class EditUserTaskUseCase {
 
   private calculatePoints(lastPoints: number, difficultLevel: number): number {
     return lastPoints + difficultLevel * 10;
+  }
+
+  private getUserTotalScore(userId: string) {
+    return await this.scoreRepo
+      .createQueryBuilder('score')
+      .leftJoin('score.user', 'user')
+      .where('user.id = :userId', { userId })
+      .select('SUM(score.points)', 'total')
+      .getRawOne();
   }
 }

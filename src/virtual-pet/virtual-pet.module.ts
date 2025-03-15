@@ -7,6 +7,8 @@ import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { CreatePetUseCase } from './useCase/createPet.usecase';
 import { FetchPetUseCase } from './useCase/fetchPet.usecase';
 import { DeletePetUseCase } from './useCase/deletePet.usecase';
+import { EditPetUseCase } from './useCase/editPet.usecase';
+import { VirtualPetService } from './virtual-pet.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, VirtualPet])],
@@ -16,6 +18,8 @@ import { DeletePetUseCase } from './useCase/deletePet.usecase';
     CreatePetUseCase,
     FetchPetUseCase,
     DeletePetUseCase,
+    EditPetUseCase,
+    VirtualPetService,
   ],
 })
 export class VirtualPetModule {}

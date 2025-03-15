@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Repository } from 'typeorm';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VirtualPet } from 'src/domain/entities/virtualPet.entity';
-import { PetResponseDto } from '../dto/pet-response.dto';
 import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { IException } from 'src/infra/exceptions/exceptions.interface';
+import { EditPetDto } from '../dto/edit-pet.dto';
+import { PetResponseDto } from '../dto/pet-response.dto';
 
 @Injectable()
-export class FetchPetUseCase {
+export class EditPetUseCase {
   constructor(
     @InjectRepository(VirtualPet)
     private readonly petRepo: Repository<VirtualPet>,
@@ -16,9 +18,7 @@ export class FetchPetUseCase {
     private readonly exceptionService: IException,
   ) {}
 
-  async execute(id: string) {
-    const decayRate = 5;
-
+  async execute(input: EditPetDto, id: string) {
     const savedPets = await this.petRepo
       .createQueryBuilder('pet')
       .leftJoin('pet.user', 'user')
@@ -33,18 +33,12 @@ export class FetchPetUseCase {
     }
 
     const activePet = savedPets[0];
-
-    const daysSinceLastInteraction = daysSince(activePet.lastInteraction);
-
-    const newHappinessLevel = Math.max(
-      0,
-      activePet.hapinessLevel - daysSinceLastInteraction * decayRate,
-    );
-
-    activePet.hapinessLevel = newHappinessLevel;
-
+    input.name && (activePet.name = input.name);
+    input.hapinessLevel && (activePet.hapinessLevel = input.hapinessLevel);
+    input.lastInteraction &&
+      (activePet.lastInteraction = input.lastInteraction);
+    input.level && (activePet.level = input.level);
     await this.petRepo.save(activePet);
-
     const response = new PetResponseDto(
       activePet.id,
       activePet.name,
@@ -53,13 +47,5 @@ export class FetchPetUseCase {
       activePet.lastInteraction,
     );
     return response;
-  }
-
-  private daysSince(date: string | Date): number {
-    const givenDate = new Date(date);
-    const today = new Date();
-    const diffInMs = today.getTime() - givenDate.getTime();
-
-    return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
   }
 }

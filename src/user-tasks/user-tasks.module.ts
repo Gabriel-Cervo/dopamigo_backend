@@ -10,9 +10,13 @@ import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.u
 import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
 import { DeleteUserTaskUseCase } from './useCase/delete-userTask.usecase';
 import { Score } from 'src/domain/entities/score.entity';
+import { VirtualPetService } from 'src/virtual-pet/virtual-pet.service';
+import { FetchPetUseCase } from 'src/virtual-pet/useCase/fetchPet.usecase';
+import { EditPetUseCase } from 'src/virtual-pet/useCase/editPet.usecase';
+import { VirtualPet } from 'src/domain/entities/virtualPet.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserTask, User, Score])],
+  imports: [TypeOrmModule.forFeature([UserTask, User, Score, VirtualPet])],
   controllers: [UserTasksController],
   providers: [
     CreateUserTaskUseCase,
@@ -21,6 +25,9 @@ import { Score } from 'src/domain/entities/score.entity';
     EditUserTaskUseCase,
     DeleteUserTaskUseCase,
     ExceptionsService,
+    FetchPetUseCase,
+    EditPetUseCase,
+    VirtualPetService,
   ],
 })
 export class UserTasksModule {}
