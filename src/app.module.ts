@@ -16,6 +16,7 @@ import { UserTask } from './domain/entities/userTask.entity';
 import { VirtualPet } from './domain/entities/virtualPet.entity';
 import { UserTasksModule } from './user-tasks/user-tasks.module';
 import { VirtualPetModule } from './virtual-pet/virtual-pet.module';
+import { UserPatternModule } from './user-pattern/user-pattern.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { VirtualPetModule } from './virtual-pet/virtual-pet.module';
     UsersModule,
     UserTasksModule,
     VirtualPetModule,
+    UserPatternModule,
   ],
   controllers: [AppController],
 })
