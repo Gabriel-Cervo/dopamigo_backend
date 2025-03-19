@@ -14,7 +14,7 @@ export class OpenRouterService {
     private readonly exceptionService: ExceptionsService,
   ) {}
 
-  async sendMessage(content: string): Promise<any> {
+  async sendMessage(prompt: string): Promise<any> {
     try {
       const headers = {
         Authorization: `Bearer ${this.API_KEY}`,
@@ -23,7 +23,7 @@ export class OpenRouterService {
 
       const data = {
         model: 'deepseek/deepseek-r1-zero:free',
-        messages: [{ role: 'user', content: content }],
+        messages: [{ role: 'user', content: prompt }],
       };
 
       const response = await firstValueFrom(

@@ -52,7 +52,6 @@ export class UserPatternAnalysisService {
     const hoursMap = new Map<number, number>();
 
     tasks.forEach((task) => {
-      console.log(task);
       const hour = moment(task.time).hour();
       hoursMap.set(hour, (hoursMap.get(hour) || 0) + 1);
     });

@@ -8,6 +8,8 @@ import { OpenRouterService } from './open-router.service';
 import { UserPatternController } from './user-pattern.controller';
 import { HttpModule } from '@nestjs/axios';
 import { FetchSuggestionUseCase } from './useCase/fetch-suggestion-useCase';
+import { FetchPatternUseCase } from './useCase/fetch-pattern-useCase';
+import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-usertasks-by-week.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserTask, User]), HttpModule],
@@ -16,6 +18,8 @@ import { FetchSuggestionUseCase } from './useCase/fetch-suggestion-useCase';
     UserPatternAnalysisService,
     OpenRouterService,
     FetchSuggestionUseCase,
+    FetchPatternUseCase,
+    FetchUserTasksByWeekUseCase,
   ],
   controllers: [UserPatternController],
 })
