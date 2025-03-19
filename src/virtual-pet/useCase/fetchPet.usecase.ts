@@ -34,7 +34,7 @@ export class FetchPetUseCase {
 
     const activePet = savedPets[0];
 
-    const daysSinceLastInteraction = daysSince(activePet.lastInteraction);
+    const daysSinceLastInteraction = this.daysSince(activePet.lastInteraction);
 
     const newHappinessLevel = Math.max(
       0,

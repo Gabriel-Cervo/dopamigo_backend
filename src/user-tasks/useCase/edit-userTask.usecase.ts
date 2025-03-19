@@ -60,7 +60,7 @@ export class EditUserTaskUseCase {
 
     await this.taskRepo.save(task);
     await this.virtualPetService.levelUpIfNeeded(
-      getUserTotalScore(input.userId),
+      await this.getUserTotalScore(input.userId),
       input.userId,
     );
     return response;
@@ -103,7 +103,7 @@ export class EditUserTaskUseCase {
     return lastPoints + difficultLevel * 10;
   }
 
-  private getUserTotalScore(userId: string) {
+  private async getUserTotalScore(userId: string) {
     return await this.scoreRepo
       .createQueryBuilder('score')
       .leftJoin('score.user', 'user')

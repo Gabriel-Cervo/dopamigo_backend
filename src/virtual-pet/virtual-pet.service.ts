@@ -2,6 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { EditPetUseCase } from './useCase/editPet.usecase';
 import { EditPetDto } from './dto/edit-pet.dto';
 import { FetchPetUseCase } from './useCase/fetchPet.usecase';
+import { InjectRepository } from '@nestjs/typeorm';
+import { VirtualPet } from 'src/domain/entities/virtualPet.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class VirtualPetService {
@@ -11,6 +14,9 @@ export class VirtualPetService {
 
     @Inject(FetchPetUseCase)
     private readonly fetchPetUseCase: FetchPetUseCase,
+
+    @InjectRepository(VirtualPet)
+    private readonly petRepo: Repository<VirtualPet>,
   ) {}
 
   async didFinishTask(userId: string, taskDifficultLevel: number) {

@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserTask } from '../entities/userTask.entity';
-import { User } from '../entities/user.entity';
 import * as moment from 'moment';
+import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
+import { IException } from 'src/infra/exceptions/exceptions.interface';
+import { UserTask } from 'src/domain/entities/userTask.entity';
+import { User } from 'src/domain/entities/user.entity';
+import { UserPatternAnalysisReturnDto } from './dto/user-pattern-analysis-return.dto';
 
 @Injectable()
 export class UserPatternAnalysisService {
@@ -18,7 +21,7 @@ export class UserPatternAnalysisService {
     private readonly exceptionService: IException,
   ) {}
 
-  async getUserPatterns(userId: string): UserPatternAnalysisReturnDto {
+  async getUserPatterns(userId: string): Promise<UserPatternAnalysisReturnDto> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (!user) {
@@ -49,6 +52,7 @@ export class UserPatternAnalysisService {
     const hoursMap = new Map<number, number>();
 
     tasks.forEach((task) => {
+      console.log(task);
       const hour = moment(task.time).hour();
       hoursMap.set(hour, (hoursMap.get(hour) || 0) + 1);
     });
