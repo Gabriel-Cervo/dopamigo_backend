@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { UserPatternAnalysisService } from '../user-pattern-analysis.service';
 import { OpenRouterService } from '../open-router.service';
 import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-usertasks-by-week.usecase';
+import { FetchSuggestionWithinOneWeekUseCase } from './fetch-suggestion-within-one-week.usecase';
+import { SaveSuggestionUseCase } from './save-suggestion.usecase';
 
 @Injectable()
 export class FetchSuggestionUseCase {
@@ -14,9 +16,22 @@ export class FetchSuggestionUseCase {
 
     @Inject(FetchUserTasksByWeekUseCase)
     private readonly fetchUserTasksUseCase: FetchUserTasksByWeekUseCase,
+
+    @Inject(FetchSuggestionWithinOneWeekUseCase)
+    private readonly fetchSuggestionWithinOneWeekUseCase: FetchSuggestionWithinOneWeekUseCase,
+
+    @Inject(SaveSuggestionUseCase)
+    private readonly saveSugestionUseCase: SaveSuggestionUseCase,
   ) {}
 
   async execute(id: string) {
+    const lastActiveSuggestion =
+      await this.fetchSuggestionWithinOneWeekUseCase.execute(id);
+
+    if (lastActiveSuggestion) {
+      return lastActiveSuggestion;
+    }
+
     const userPattern =
       await this.userPatternAnalysisService.getUserPatterns(id);
 
@@ -32,7 +47,9 @@ export class FetchSuggestionUseCase {
       const message =
         result.choices[0]?.message.content ??
         `\\boxed{Não foi possível carregar uma sugestão. Por favor, conclua mais tarefas}`;
-      return message.match(/\\boxed\{(.*?)\}/)[1];
+      const matchedMessage = message.match(/\\boxed\{(.*?)\}/)[1];
+      await this.saveSugestionUseCase.execute(id, matchedMessage);
+      return matchedMessage;
     } catch (error) {
       return error;
     }

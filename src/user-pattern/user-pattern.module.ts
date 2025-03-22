@@ -10,6 +10,8 @@ import { HttpModule } from '@nestjs/axios';
 import { FetchSuggestionUseCase } from './useCase/fetch-suggestion-useCase';
 import { FetchPatternUseCase } from './useCase/fetch-pattern-useCase';
 import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-usertasks-by-week.usecase';
+import { FetchSuggestionWithinOneWeekUseCase } from './useCase/fetch-suggestion-within-one-week.usecase';
+import { SaveSuggestionUseCase } from './useCase/save-suggestion.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserTask, User]), HttpModule],
@@ -20,6 +22,8 @@ import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-userta
     FetchSuggestionUseCase,
     FetchPatternUseCase,
     FetchUserTasksByWeekUseCase,
+    FetchSuggestionWithinOneWeekUseCase,
+    SaveSuggestionUseCase,
   ],
   controllers: [UserPatternController],
 })
