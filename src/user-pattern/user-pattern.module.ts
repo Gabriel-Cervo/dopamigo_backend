@@ -12,9 +12,13 @@ import { FetchPatternUseCase } from './useCase/fetch-pattern-useCase';
 import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-usertasks-by-week.usecase';
 import { FetchSuggestionWithinOneWeekUseCase } from './useCase/fetch-suggestion-within-one-week.usecase';
 import { SaveSuggestionUseCase } from './useCase/save-suggestion.usecase';
+import { UserSuggestion } from 'src/domain/entities/userSuggestion.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserTask, User]), HttpModule],
+  imports: [
+    TypeOrmModule.forFeature([UserTask, User, UserSuggestion]),
+    HttpModule,
+  ],
   providers: [
     ExceptionsService,
     UserPatternAnalysisService,

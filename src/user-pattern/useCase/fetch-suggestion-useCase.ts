@@ -4,6 +4,8 @@ import { OpenRouterService } from '../open-router.service';
 import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-usertasks-by-week.usecase';
 import { FetchSuggestionWithinOneWeekUseCase } from './fetch-suggestion-within-one-week.usecase';
 import { SaveSuggestionUseCase } from './save-suggestion.usecase';
+import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
+import { IException } from 'src/infra/exceptions/exceptions.interface';
 
 @Injectable()
 export class FetchSuggestionUseCase {
@@ -22,6 +24,9 @@ export class FetchSuggestionUseCase {
 
     @Inject(SaveSuggestionUseCase)
     private readonly saveSugestionUseCase: SaveSuggestionUseCase,
+
+    @Inject(ExceptionsService)
+    private readonly exceptionService: IException,
   ) {}
 
   async execute(id: string) {
@@ -44,6 +49,13 @@ export class FetchSuggestionUseCase {
 
     try {
       const result = await this.openRouterService.sendMessage(prompt);
+
+      if (result.error) {
+        throw this.exceptionService.internalServerErrorException({
+          message: 'Houve um erro ao fazer a request para a IA',
+        });
+      }
+
       const message =
         result.choices[0]?.message.content ??
         `\\boxed{Não foi possível carregar uma sugestão. Por favor, conclua mais tarefas}`;
@@ -51,7 +63,9 @@ export class FetchSuggestionUseCase {
       await this.saveSugestionUseCase.execute(id, matchedMessage);
       return matchedMessage;
     } catch (error) {
-      return error;
+      throw this.exceptionService.internalServerErrorException({
+        message: error,
+      });
     }
   }
 }

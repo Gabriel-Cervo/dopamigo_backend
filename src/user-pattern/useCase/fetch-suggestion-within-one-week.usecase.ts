@@ -11,11 +11,16 @@ export class FetchSuggestionWithinOneWeekUseCase {
   ) {}
 
   async execute(userId: string): Promise<UserSuggestion | null> {
+    const startDate = new Date();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     return this.suggestionRepo
       .createQueryBuilder('suggestion')
-      .where('suggestion.userId = :userId', { userId })
-      .andWhere('suggestion.createdAt >= :date', {
-        date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+      .leftJoin('suggestion.user', 'user')
+      .where('user.id = :userId', { userId })
+      .andWhere('suggestion.createdAt BETWEEN :oneWeekAgo AND :startDate', {
+        oneWeekAgo,
+        startDate,
       })
       .orderBy('suggestion.createdAt', 'DESC')
       .getOne();

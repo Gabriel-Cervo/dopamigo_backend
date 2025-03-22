@@ -31,7 +31,8 @@ export class SaveSuggestionUseCase {
       });
     }
 
-    const suggestion = new UserSuggestion({ user: user, content: content });
+    const suggestion = new UserSuggestion({ content: content });
+    suggestion.user = user;
     return this.suggestionRepo.save(suggestion);
   }
 }

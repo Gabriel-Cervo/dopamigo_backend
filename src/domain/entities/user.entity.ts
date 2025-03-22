@@ -15,6 +15,7 @@ import { UserAchievements } from './userAchievements.entity';
 import { Reports } from './reports.entity';
 import { Notifications } from './notifications.entity';
 import { VirtualPet } from './virtualPet.entity';
+import { UserSuggestion } from './userSuggestion.entity';
 
 @Entity()
 export class User {
@@ -62,6 +63,9 @@ export class User {
   @OneToOne(() => VirtualPet, (pet) => pet.user, { nullable: true })
   @JoinColumn()
   pet: VirtualPet | null;
+
+  @OneToMany(() => UserSuggestion, (suggestion) => suggestion.user)
+  suggestions: UserSuggestion[];
 
   constructor(props: {
     name: string;
