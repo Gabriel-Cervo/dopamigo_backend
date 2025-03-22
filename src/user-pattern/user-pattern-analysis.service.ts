@@ -30,21 +30,26 @@ export class UserPatternAnalysisService {
       });
     }
 
-    const tasks = await this.userTaskRepository.find({
-      where: { user: { id: userId }, isCompleted: true },
+    const allTasks = await this.userTaskRepository.find({
+      where: { user: { id: userId } },
     });
+    const completedTasks = allTasks.filter((task) => task.isCompleted);
 
-    if (tasks.length === 0) {
+    if (completedTasks.length === 0) {
       throw this.exceptionService.badRequestException({
         message: 'Nenhuma tarefa concluída encontrada para análise.',
       });
     }
 
+    const completionPercentage =
+      (completedTasks.length / allTasks.length) * 100;
+
     return new UserPatternAnalysisReturnDto(
-      this.getMostFrequentCompletionHour(tasks),
-      this.getMostProductiveDays(tasks),
-      this.getCommonTaskTitles(tasks),
-      this.getAverageCompletionTime(tasks),
+      this.getMostFrequentCompletionHour(completedTasks),
+      this.getMostProductiveDays(completedTasks),
+      this.getCommonTaskTitles(completedTasks),
+      this.getAverageCompletionTime(completedTasks),
+      completionPercentage,
     );
   }
 

@@ -33,7 +33,6 @@ export class FetchSuggestionUseCase {
     const lastActiveSuggestion =
       await this.fetchSuggestionWithinOneWeekUseCase.execute(id);
 
-    console.log(lastActiveSuggestion);
     if (lastActiveSuggestion) {
       return lastActiveSuggestion;
     }
