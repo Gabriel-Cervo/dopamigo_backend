@@ -22,7 +22,7 @@ export class OpenRouterService {
       };
 
       const data = {
-        model: 'deepseek/deepseek-r1-zero:free',
+        model: 'google/gemini-2.0-flash-thinking-exp:free',
         messages: [{ role: 'user', content: prompt }],
       };
 

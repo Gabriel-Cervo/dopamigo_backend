@@ -33,6 +33,7 @@ export class FetchSuggestionUseCase {
     const lastActiveSuggestion =
       await this.fetchSuggestionWithinOneWeekUseCase.execute(id);
 
+    console.log(lastActiveSuggestion);
     if (lastActiveSuggestion) {
       return lastActiveSuggestion;
     }
@@ -58,10 +59,9 @@ export class FetchSuggestionUseCase {
 
       const message =
         result.choices[0]?.message.content ??
-        `\\boxed{Não foi possível carregar uma sugestão. Por favor, conclua mais tarefas}`;
-      const matchedMessage = message.match(/\\boxed\{(.*?)\}/)[1];
-      await this.saveSugestionUseCase.execute(id, matchedMessage);
-      return matchedMessage;
+        `Não foi possível carregar uma sugestão. Por favor, conclua mais tarefas`;
+      await this.saveSugestionUseCase.execute(id, message);
+      return message;
     } catch (error) {
       throw this.exceptionService.internalServerErrorException({
         message: error,
