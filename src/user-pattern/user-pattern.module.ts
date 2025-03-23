@@ -13,10 +13,14 @@ import { FetchUserTasksByWeekUseCase } from 'src/user-tasks/useCase/fetch-userta
 import { FetchSuggestionWithinOneWeekUseCase } from './useCase/fetch-suggestion-within-one-week.usecase';
 import { SaveSuggestionUseCase } from './useCase/save-suggestion.usecase';
 import { UserSuggestion } from 'src/domain/entities/userSuggestion.entity';
+import { SaveImprovementUseCase } from './useCase/save-improvement.usecase';
+import { FetchImprovementsWithinOneWeekUseCase } from './useCase/fetch-improvements-within-one-week.usecase';
+import { FetchImprovementsUseCase } from './useCase/fetch-improvements.useCase';
+import { UserImprovement } from 'src/domain/entities/userImprovement.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserTask, User, UserSuggestion]),
+    TypeOrmModule.forFeature([UserTask, User, UserSuggestion, UserImprovement]),
     HttpModule,
   ],
   providers: [
@@ -28,6 +32,9 @@ import { UserSuggestion } from 'src/domain/entities/userSuggestion.entity';
     FetchUserTasksByWeekUseCase,
     FetchSuggestionWithinOneWeekUseCase,
     SaveSuggestionUseCase,
+    FetchImprovementsUseCase,
+    FetchImprovementsWithinOneWeekUseCase,
+    SaveImprovementUseCase,
   ],
   controllers: [UserPatternController],
 })

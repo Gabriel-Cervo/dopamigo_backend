@@ -16,6 +16,7 @@ import { Reports } from './reports.entity';
 import { Notifications } from './notifications.entity';
 import { VirtualPet } from './virtualPet.entity';
 import { UserSuggestion } from './userSuggestion.entity';
+import { UserImprovement } from './userImprovement.entity';
 
 @Entity()
 export class User {
@@ -66,6 +67,9 @@ export class User {
 
   @OneToMany(() => UserSuggestion, (suggestion) => suggestion.user)
   suggestions: UserSuggestion[];
+
+  @OneToMany(() => UserImprovement, (improvement) => improvement.user)
+  improvements: UserImprovement[];
 
   constructor(props: {
     name: string;

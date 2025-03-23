@@ -18,6 +18,7 @@ import { UserTasksModule } from './user-tasks/user-tasks.module';
 import { VirtualPetModule } from './virtual-pet/virtual-pet.module';
 import { UserPatternModule } from './user-pattern/user-pattern.module';
 import { UserSuggestion } from './domain/entities/userSuggestion.entity';
+import { UserImprovement } from './domain/entities/userImprovement.entity';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UserSuggestion } from './domain/entities/userSuggestion.entity';
         UserTask,
         VirtualPet,
         UserSuggestion,
+        UserImprovement,
       ],
       synchronize: true, // DONT USE THIS TRUE IN PROD
     }),
