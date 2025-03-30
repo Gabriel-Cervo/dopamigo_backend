@@ -5,6 +5,7 @@ export class UpdateUserTaskResponseDto {
   isCompleted: boolean;
   difficultLevel: number;
   newScore?: UpdateUserTaskScoreResponseDto | null;
+  unlockedAchievement?: UpdateUserTaskAchievementResponseDto | null;
 
   constructor(
     title: string,
@@ -28,5 +29,17 @@ export class UpdateUserTaskScoreResponseDto {
   constructor(id: string, points: number) {
     this.id = id;
     this.points = points;
+  }
+}
+
+export class UpdateUserTaskAchievementResponseDto {
+  id: string;
+  name: string;
+  description: string;
+
+  constructor(id: string, name: string, description: string) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
   }
 }

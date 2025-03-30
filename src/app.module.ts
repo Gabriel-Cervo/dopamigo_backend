@@ -19,6 +19,7 @@ import { VirtualPetModule } from './virtual-pet/virtual-pet.module';
 import { UserPatternModule } from './user-pattern/user-pattern.module';
 import { UserSuggestion } from './domain/entities/userSuggestion.entity';
 import { UserImprovement } from './domain/entities/userImprovement.entity';
+import { UserAchievementModule } from './user-achievement/user-achievement.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { UserImprovement } from './domain/entities/userImprovement.entity';
     UserTasksModule,
     VirtualPetModule,
     UserPatternModule,
+    UserAchievementModule,
   ],
   controllers: [AppController],
 })

@@ -7,10 +7,12 @@ import { UpdateUserTaskDto } from '../dto/update-userTask.dto';
 import { UserTask } from 'src/domain/entities/userTask.entity';
 import { Score } from 'src/domain/entities/score.entity';
 import {
+  UpdateUserTaskAchievementResponseDto,
   UpdateUserTaskResponseDto,
   UpdateUserTaskScoreResponseDto,
 } from '../dto/update-userTask-response.dto';
 import { VirtualPetService } from 'src/virtual-pet/virtual-pet.service';
+import { UserAchievementsService } from 'src/user-achievement/user-achievements.service';
 
 @Injectable()
 export class EditUserTaskUseCase {
@@ -26,6 +28,9 @@ export class EditUserTaskUseCase {
 
     @Inject(VirtualPetService)
     private readonly virtualPetService: VirtualPetService,
+
+    @Inject(UserAchievementsService)
+    private readonly userAchievementsService: UserAchievementsService,
   ) {}
 
   async execute(id: string, input: UpdateUserTaskDto) {
@@ -56,6 +61,17 @@ export class EditUserTaskUseCase {
       );
 
       this.virtualPetService.didFinishTask(input.userId, input.difficultLevel);
+
+      const unlockedAchievement =
+        await this.userAchievementsService.verifyIfUserFinishedAchievent(
+          input.userId,
+        );
+
+      response.unlockedAchievement = new UpdateUserTaskAchievementResponseDto(
+        unlockedAchievement.achievement.id,
+        unlockedAchievement.achievement.name,
+        unlockedAchievement.achievement.description,
+      );
     }
 
     await this.taskRepo.save(task);

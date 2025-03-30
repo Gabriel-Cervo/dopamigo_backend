@@ -31,4 +31,8 @@ export class Achievements {
 
   @Column({ nullable: true, type: 'timestamp' })
   deletedAt?: Date | null;
+
+  constructor(props?: Partial<Achievements>) {
+    Object.assign(this, props);
+  }
 }
