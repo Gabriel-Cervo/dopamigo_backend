@@ -8,6 +8,7 @@ import {
   Put,
   UseGuards,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';
 import { CreateUserTaskDto } from './dto/create-userTask.dto';
@@ -45,19 +46,19 @@ export class UserTasksController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('all/:id/:page')
-  get(@Param('id') id: string, @Param('page') page: string) {
+  @Get('all/:page')
+  get(@Request() req: any, @Param('page') page: string) {
     return this.fetchUserTasksUseCase.execute(
-      id,
+      req.user.sub,
       page == null ? null : parseInt(page),
     );
   }
 
   @UseGuards(AuthGuard)
-  @Get('byWeek/:id')
-  getByWeek(@Param('id') id: string, @Body() body: UserTaskByWeekDto) {
+  @Get('byWeek')
+  getByWeek(@Request() req: any, @Body() body: UserTaskByWeekDto) {
     const date = new Date(body.date);
-    return this.fetchUserTasksByWeekUseCase.execute(id, date);
+    return this.fetchUserTasksByWeekUseCase.execute(req.user.sub, date);
   }
 
   @UseGuards(AuthGuard)
