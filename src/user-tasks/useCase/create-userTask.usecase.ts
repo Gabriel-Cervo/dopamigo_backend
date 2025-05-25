@@ -15,7 +15,7 @@ export class CreateUserTaskUseCase {
     private userRepo: Repository<User>,
   ) {}
 
-  async execute(input: CreateUserTaskDto) {
+  async execute(input: CreateUserTaskDto, userId: string) {
     const userTask = new UserTask({
       title: input.title,
       description: input.description,
@@ -26,7 +26,7 @@ export class CreateUserTaskUseCase {
 
     const user = await this.userRepo.findOne({
       where: {
-        id: input.userId,
+        id: userId,
       },
     });
 

@@ -20,7 +20,14 @@ export class VirtualPetService {
   ) {}
 
   async didFinishTask(userId: string, taskDifficultLevel: number) {
-    const pet = await this.fetchPetUseCase.execute(userId);
+    const pet = await this.petRepo.findOne({
+      where: { user: { id: userId } },
+    });
+
+    if (!pet) {
+      return;
+    }
+
     const newHappinessLevel = pet.hapinessLevel + taskDifficultLevel * 5;
     const cappedHappinessLevel = Math.min(100, newHappinessLevel);
     const dto = new EditPetDto({

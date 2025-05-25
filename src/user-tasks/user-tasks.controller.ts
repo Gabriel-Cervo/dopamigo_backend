@@ -9,6 +9,7 @@ import {
   UseGuards,
   Delete,
   Request,
+  Query,
 } from '@nestjs/common';
 import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';
 import { CreateUserTaskDto } from './dto/create-userTask.dto';
@@ -41,8 +42,8 @@ export class UserTasksController {
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createUserTaskDto: CreateUserTaskDto) {
-    return this.createUserTaskUseCase.execute(createUserTaskDto);
+  create(@Body() createUserTaskDto: CreateUserTaskDto, @Request() req: any) {
+    return this.createUserTaskUseCase.execute(createUserTaskDto, req.user.sub);
   }
 
   @UseGuards(AuthGuard)
@@ -56,15 +57,19 @@ export class UserTasksController {
 
   @UseGuards(AuthGuard)
   @Get('byWeek')
-  getByWeek(@Request() req: any, @Body() body: UserTaskByWeekDto) {
+  getByWeek(@Request() req: any, @Query() body: UserTaskByWeekDto) {
     const date = new Date(body.date);
     return this.fetchUserTasksByWeekUseCase.execute(req.user.sub, date);
   }
 
   @UseGuards(AuthGuard)
   @Put('update/:id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateUserTaskDto) {
-    return this.editUserTaskUseCase.execute(id, updateTaskDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateUserTaskDto,
+    @Request() req: any,
+  ) {
+    return this.editUserTaskUseCase.execute(id, updateTaskDto, req.user.sub);
   }
 
   @UseGuards(AuthGuard)

@@ -13,8 +13,5 @@ export class CreateUserTaskDto {
   @IsNotEmpty()
   difficultLevel: number;
 
-  @IsNotEmpty()
-  userId: string;
-
   isCompleted?: boolean | null;
 }

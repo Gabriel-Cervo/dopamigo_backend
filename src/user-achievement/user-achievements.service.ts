@@ -35,6 +35,10 @@ export class UserAchievementsService {
   ): Promise<UserAchievements | null> {
     const achievements = await this.getAllAchievements();
 
+    if (achievements.length === 0) {
+      return null;
+    }
+
     let completedUserTasks = await this.fetchUserTasksForUserUseCase.execute(
       userId,
       null,

@@ -33,7 +33,7 @@ export class EditUserTaskUseCase {
     private readonly userAchievementsService: UserAchievementsService,
   ) {}
 
-  async execute(id: string, input: UpdateUserTaskDto) {
+  async execute(id: string, input: UpdateUserTaskDto, userId: string) {
     const task = await this.taskRepo.findOneOrFail({ where: { id } });
 
     input.title && (task.title = input.title);
@@ -49,35 +49,34 @@ export class EditUserTaskUseCase {
       input.difficultLevel,
     );
 
-    if ((input.isCompleted, input.userId != null)) {
-      const score = await this.distributePoints(
-        input.userId,
-        task.difficultLevel,
-      );
+    if ((input.isCompleted, userId != null)) {
+      const score = await this.distributePoints(userId, task.difficultLevel);
 
       response.newScore = new UpdateUserTaskScoreResponseDto(
         score.id,
         score.points,
       );
 
-      this.virtualPetService.didFinishTask(input.userId, input.difficultLevel);
+      this.virtualPetService.didFinishTask(userId, input.difficultLevel);
 
       const unlockedAchievement =
         await this.userAchievementsService.verifyIfUserFinishedAchievent(
-          input.userId,
+          userId,
         );
 
-      response.unlockedAchievement = new UpdateUserTaskAchievementResponseDto(
-        unlockedAchievement.achievement.id,
-        unlockedAchievement.achievement.name,
-        unlockedAchievement.achievement.description,
-      );
+      if (unlockedAchievement) {
+        response.unlockedAchievement = new UpdateUserTaskAchievementResponseDto(
+          unlockedAchievement.achievement.id,
+          unlockedAchievement.achievement.name,
+          unlockedAchievement.achievement.description,
+        );
+      }
     }
 
     await this.taskRepo.save(task);
     await this.virtualPetService.levelUpIfNeeded(
-      await this.getUserTotalScore(input.userId),
-      input.userId,
+      await this.getUserTotalScore(userId),
+      userId,
     );
     return response;
   }
