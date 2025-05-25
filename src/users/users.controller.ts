@@ -56,9 +56,15 @@ export class UsersController {
     return this.fetchAllUsersUseCase.execute();
   }
 
-  @Get(':id')
+  @Get('one/:id')
   findOne(@Param('id') id: string) {
     return this.fetchUserByIdUseCase.execute(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me')
+  findMe(@Request() req: any) {
+    return this.fetchUserByIdUseCase.execute(req.user.sub);
   }
 
   @UseGuards(AuthGuard)
