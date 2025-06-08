@@ -22,7 +22,7 @@ export class OpenRouterService {
       };
 
       const data = {
-        model: 'google/gemini-2.0-flash-thinking-exp:free',
+        model: 'google/gemini-2.0-flash-exp:free',
         messages: [{ role: 'user', content: prompt }],
       };
 
