@@ -34,7 +34,7 @@ export class FetchSuggestionUseCase {
       await this.fetchSuggestionWithinOneWeekUseCase.execute(id);
 
     if (lastActiveSuggestion) {
-      return lastActiveSuggestion;
+      return lastActiveSuggestion.content;
     }
 
     const userPattern =
