@@ -34,7 +34,7 @@ export class FetchImprovementsUseCase {
       await this.fetchImprovementsWithinOneWeekUseCase.execute(id);
 
     if (lastActiveImprovement) {
-      return lastActiveImprovement;
+      return lastActiveImprovement.content;
     }
 
     const userPattern =
