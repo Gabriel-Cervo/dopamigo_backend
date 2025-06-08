@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserTask } from 'src/domain/entities/userTask.entity';
 import { User } from 'src/domain/entities/user.entity';
-import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { UserPatternAnalysisService } from './user-pattern-analysis.service';
 import { OpenRouterService } from './open-router.service';
 import { UserPatternController } from './user-pattern.controller';
@@ -17,14 +16,15 @@ import { SaveImprovementUseCase } from './useCase/save-improvement.usecase';
 import { FetchImprovementsWithinOneWeekUseCase } from './useCase/fetch-improvements-within-one-week.usecase';
 import { FetchImprovementsUseCase } from './useCase/fetch-improvements.useCase';
 import { UserImprovement } from 'src/domain/entities/userImprovement.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserTask, User, UserSuggestion, UserImprovement]),
     HttpModule,
+    AuthModule,
   ],
   providers: [
-    ExceptionsService,
     UserPatternAnalysisService,
     OpenRouterService,
     FetchSuggestionUseCase,

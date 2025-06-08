@@ -4,7 +4,6 @@ import { UserTask } from 'src/domain/entities/userTask.entity';
 import { UserTasksController } from './user-tasks.controller';
 import { CreateUserTaskUseCase } from './useCase/create-userTask.usecase';
 import { User } from 'src/domain/entities/user.entity';
-import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { FetchUserTasksForUserUseCase } from './useCase/fetch-userTasks-for-user.usecase';
 import { FetchUserTasksByWeekUseCase } from './useCase/fetch-usertasks-by-week.usecase';
 import { EditUserTaskUseCase } from './useCase/edit-userTask.usecase';
@@ -21,6 +20,7 @@ import { FetchAchievementsUseCase } from 'src/user-achievement/useCase/fetch-ach
 import { SaveUserAchievementUseCase } from 'src/user-achievement/useCase/save-user-achievement.usecase';
 import { FetchUserAchievementsUseCase } from 'src/user-achievement/useCase/fetch-user-achievements.usecase';
 import { UserAchievements } from 'src/domain/entities/userAchievements.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +32,7 @@ import { UserAchievements } from 'src/domain/entities/userAchievements.entity';
       Achievements,
       UserAchievements,
     ]),
+    AuthModule,
   ],
   controllers: [UserTasksController],
   providers: [
@@ -40,7 +41,6 @@ import { UserAchievements } from 'src/domain/entities/userAchievements.entity';
     FetchUserTasksByWeekUseCase,
     EditUserTaskUseCase,
     DeleteUserTaskUseCase,
-    ExceptionsService,
     FetchPetUseCase,
     EditPetUseCase,
     VirtualPetService,

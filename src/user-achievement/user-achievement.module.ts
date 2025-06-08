@@ -12,10 +12,12 @@ import { AchievementsController } from './achievement.controller';
 import { FetchUserAchievementsUseCase } from './useCase/fetch-user-achievements.usecase';
 import { UserAchievementsController } from './user-achievements.controller';
 import { FetchUserAchievementsSorted } from './useCase/fetch-user-achievements-sorted.usecase';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserTask, User, Achievements, UserAchievements]),
+    AuthModule,
   ],
   providers: [
     ExceptionsService,

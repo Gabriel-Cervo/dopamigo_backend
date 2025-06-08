@@ -23,7 +23,10 @@ import { UserAchievementModule } from './user-achievement/user-achievement.modul
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: `.env.${process.env.NODE_ENV}` }),
+    ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -43,7 +46,7 @@ import { UserAchievementModule } from './user-achievement/user-achievement.modul
         UserSuggestion,
         UserImprovement,
       ],
-      synchronize: true, // DONT USE THIS TRUE IN PROD
+      synchronize: true,
     }),
 
     LoggerModule,
