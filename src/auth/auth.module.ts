@@ -21,3 +21,4 @@ import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
   controllers: [AuthController],
 })
 export class AuthModule {}
+

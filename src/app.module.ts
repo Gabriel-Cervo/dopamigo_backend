@@ -23,7 +23,7 @@ import { UserAchievementModule } from './user-achievement/user-achievement.modul
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: `${process.env.NODE_ENV}.env` }),
+    ConfigModule.forRoot({ envFilePath: `.env.${process.env.NODE_ENV}` }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
