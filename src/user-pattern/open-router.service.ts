@@ -2,27 +2,29 @@ import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class OpenRouterService {
   private readonly API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-  private readonly API_KEY = process.env.OPENROUTER_API_KEY;
 
   constructor(
+    private readonly configService: ConfigService,
     private readonly httpService: HttpService,
     @Inject(ExceptionsService)
     private readonly exceptionService: ExceptionsService,
   ) {}
 
   async sendMessage(prompt: string): Promise<any> {
+    const API_KEY = this.configService.get<string>('OPENROUTER_API_KEY');
     try {
       const headers = {
-        Authorization: `Bearer ${this.API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
       };
 
       const data = {
-        model: 'google/gemini-2.0-flash-exp:free',
+        model: 'deepseek/deepseek-chat-v3-0324:free',
         messages: [{ role: 'user', content: prompt }],
       };
 
